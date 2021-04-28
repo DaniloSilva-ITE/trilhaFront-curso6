@@ -5,28 +5,41 @@ console.log("Fui carregado de um arq externo");
 var titulo = document.querySelector(".titulo");
 titulo.textContent = "Aparecida Nutricionista";
 
-var trPaciente = document.querySelector('#primeiro-paciente');
-var tdPeso = trPaciente.querySelector('.info-peso');
-var tdAltura = trPaciente.querySelector('.info-altura');
-var tdImc = trPaciente.querySelector('.info-imc');
+var pacientes = document.querySelectorAll(".paciente");
 
-var peso = tdPeso.textContent;
-var altura = tdAltura.textContent;
+for (var i = 0; i < pacientes.length; i++) {
+    var paciente = pacientes[i];
+    var tdPeso = paciente.querySelector(".info-peso");
+    var tdAltura = paciente.querySelector(".info-altura");
 
-var pesoEhValido = true; 
-var alturaEhValida = true;
+    var tdImc = paciente.querySelector(".info-imc");
 
-if(peso <=0 || peso >= 1000) {
-    pesoEhValido = false;
-    tdPeso.textContent = 'peso inválido';
- }
- 
- if(altura <= 0 || altura >= 3.00) {
-   alturaEhValida = false;
-   tdAltura.textContent = 'altura inválida';
- }
- 
- if(pesoEhValido && alturaEhValida) {
-    var imc = peso / ( altura * altura);
-    tdImc.textContent = imc; 
- }
+    var peso = tdPeso.textContent;
+    var altura = tdAltura.textContent;
+
+    var alturaEhValida = true;
+    var pesoEhValido = true;
+
+    if (peso <= 0 || peso >= 1000) {
+        console.log("Peso inválido");
+        tdImc.textContent = "Peso inválido!";
+        pesoEhValido = false;
+        
+        paciente.classList.add("paciente-invalido");
+    }
+
+    if (altura <= 0 || altura >= 3.0) {
+        console.log("Altura inválida");
+        tdImc.textContent = "Altura inválida!";
+        alturaEhValida = false; 
+           
+        paciente.classList.add("paciente-invalido");
+    }
+
+    if (pesoEhValido && alturaEhValida) {
+        var imc = peso / (altura * altura);
+        tdImc.textContent = imc.toFixed(2);
+    } else {
+        tdImc.textContent = "Altura e/ou peso inválidos!"
+    }
+}
